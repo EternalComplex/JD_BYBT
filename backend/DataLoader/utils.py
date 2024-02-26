@@ -3,6 +3,7 @@ import random
 import time
 
 from selenium import webdriver
+from HiveClient import HiveClient
 
 
 def random_time(start, end, fmt='%Y-%m-%d %H:%M:%S'):
@@ -26,5 +27,15 @@ def random_region():
     return t[random.randint(0, 32)]
 
 
+def load_to_hive():
+    hive = HiveClient()
+    sql = """
+        create external table orders(id string, s_id string, s_name string, s_price double, s_num int, source string, u_id string, region string, emt int, plus int, order_time date) row format delimited fields terminated by '^'
+        location 'D://JD_BYBT/backend/DataLoader/data/order.csv'
+    """
+    hive.insert(sql)
+
+
 if __name__ == "__main__":
     print(random_time('2023-01-01 00:00:00', '2023-12-31 11:59:59'))
+    # load_to_hive()
