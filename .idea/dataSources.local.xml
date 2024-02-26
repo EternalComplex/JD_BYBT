@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="PY-232.10072.31">
+    <data-source name="@192.168.10.102" uuid="6d9ed23a-5f2c-4211-88c3-81e2eebe53ab">
+      <database-info product="Apache Hive" version="3.1.2" jdbc-version="3.0" driver-name="Hive JDBC" driver-version="3.1.2" dbms="HIVE" exact-version="3.1.2" exact-driver-version="3.1" />
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>hadoop</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema">
+            <name qname="@" />
+            <name qname="jd" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+  </component>
+</project>
