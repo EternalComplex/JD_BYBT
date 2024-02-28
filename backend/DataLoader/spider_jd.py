@@ -39,27 +39,32 @@ def get_detail_info(detail_urls):
         # 商品单价
         s_price = s_price
 
-        with (open('./data/order.csv', 'a', encoding='utf-8') as f):
-            # 订单id^商品id^商品名称^商品单价^商品数量^货源^下单用户id^ip属地^下单设备^会员^下单时间
-            for i in range(15):
-                info = '^'.join(map(str, [
-                    uuid.uuid4(),
-                    s_id,
-                    s_name,
-                    s_price,
-                    random.randint(1, 5),
-                    source,
-                    random.randint(1, 1000),
-                    random_region(),
-                    random.randint(0, 1),
-                    random.randint(0, 1),
-                    random_time('2023-01-01 00:00:00', '2023-12-31 11:59:59')
-                ])).replace('[', '').replace(']', '').replace('\'', '')
+        a = [0, 1, 2, 3]
+        weight = [100, 50, 25, 5]
 
-                print(info)
+        with (open('./data/orders_2.csv', 'a', encoding='utf-8') as f):
+            for x in range(random.randint(1, 3)):
+                length = random.randint(50, 100)
+                ran = random.choices(a, weight, k=length)
+                # 订单id^商品id^商品名称^商品单价^商品数量^货源^下单用户id^ip属地^状态^下单时间
+                for i in range(length):
+                    info = '^'.join(map(str, [
+                        uuid.uuid4(),
+                        s_id,
+                        s_name,
+                        s_price,
+                        random.randint(1, 5),
+                        source,
+                        random.randint(1, 1000),
+                        random_region(),
+                        ran[i],
+                        random_time('2023-01-01 00:00:00', '2023-12-31 11:59:59')
+                    ])).replace('[', '').replace(']', '').replace('\'', '')
 
-                f.write(info + '\n')
-        time.sleep(60)
+                    print(info)
+
+                    f.write(info + '\n')
+        time.sleep(10)
 
 
 if __name__ == "__main__":

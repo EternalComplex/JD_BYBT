@@ -1,8 +1,6 @@
 import datetime
 import random
-import time
 
-from selenium import webdriver
 from HiveClient import HiveClient
 
 
@@ -23,19 +21,39 @@ def random_region():
         '重庆市', '四川省', '贵州省', '云南省', '西藏自治区',
         '陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区',
     ]
+    weight = [
+        100, 100, 100, 100, 5,
+        100, 100, 100,
+        100, 100, 100, 100, 100, 100, 5,
+        110, 100, 100, 100, 50, 100, 5, 5,
+        100, 100, 100, 100, 5,
+        100, 100, 100, 10, 5
+    ]
 
-    return t[random.randint(0, 32)]
+    return random.choices(t, weight)
 
 
 def load_to_hive():
     hive = HiveClient()
     sql = """
-        create external table orders(id string, s_id string, s_name string, s_price double, s_num int, source string, u_id string, region string, emt int, plus int, order_time date) row format delimited fields terminated by '^'
-        location 'D://JD_BYBT/backend/DataLoader/data/order.csv'
+        create external table orders(
+            id string, 
+            s_id string, 
+            s_name string, 
+            s_price double, 
+            s_num int, 
+            source string, 
+            u_id string, 
+            region string, 
+            status int, 
+            order_time date
+        ) row format delimited fields terminated by '^'
     """
+    sql_2 = "load data local inpath '/home/hadoop/orders_2.csv' into table orders;"
     hive.insert(sql)
+    hive.insert(sql_2)
 
 
 if __name__ == "__main__":
     print(random_time('2023-01-01 00:00:00', '2023-12-31 11:59:59'))
-    # load_to_hive()
+    load_to_hive()
